@@ -1,0 +1,33 @@
+<section class="search">
+    <div class="search__form">
+        <form action="/user/search" method="POST">
+            <input class="search__input" type="text" name="usuario" id="usuario" placeholder="Quem você esta procurando?" aria-label="usuario">
+    
+            <button class="search__btn" type="submit">Procurar</button>
+        </form>
+    </div>
+
+<?php if(isset($results)) { foreach($results as $user) { ?>
+
+    <div class="search__item">
+        <p><?= $user->nome ?></p>
+
+        <div>
+
+<?php if($user->seguindo == 0) { ?>
+
+            <a class="search__link search__link--follow" href="/user/follow/<?= $user->iduser ?>">Seguir</a>
+
+<?php } ?>  
+<?php if($user->seguindo == 1) { ?>
+
+            <a class="search__link search__link--unfollow" href="/user/unfollow/<?= $user->iduser ?>">Deixar de seguir</a>
+        
+
+<?php } ?>  
+        </div>
+    </div>
+
+<?php }} ?>
+
+</section>

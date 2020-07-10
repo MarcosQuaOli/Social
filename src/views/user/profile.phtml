@@ -1,0 +1,24 @@
+<section class="profile">
+    <div class="page">
+        <h2 class="profile__title"><?= $_SESSION['user']['nome'] ?></h2>
+
+        <div class="profile__container">
+            <div class="profile__box">
+                <h3>Sobre</h3>
+
+                <p>Email: <?= $_SESSION['user']['email'] ?></p>
+                <p>Aniversario: <?= $_SESSION['user']['birthday'] ?></p>
+            </div>
+
+            <div class="profile__box">
+                <h3>Publicações</h3>
+
+                <div>
+                    <h4><?= $_SESSION['user']['nome'] ?></h4>
+                    <time>data da postagem</time>
+                    <p>Texto da postagem</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

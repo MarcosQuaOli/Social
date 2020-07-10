@@ -1,0 +1,25 @@
+<section class="contato">
+    <div class="contato__group">
+        <h3 class="contato__title">Amigos</h3>
+    
+        <a class="contato__search" href="/user/search">Adicionar pessoas conhecidas</a>
+
+        <div>
+
+<?php foreach($friends as $friend) { ?>
+
+            <a class="contato__link" href=""><?= $friend->nome ?></a>
+
+<?php } ?>
+        </div>
+    </div>
+
+    <div class="contato__message">
+        <div class="contato__user">Usuario</div>
+        <div class="contato__form">
+            <form action="">
+                <input class="contato__input" type="text" placeholder="Digite uma mensagem">
+            </form>
+        </div>
+    </div>
+</section>

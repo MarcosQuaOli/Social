@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus, input:focus {
+    outline: 0;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #1c1e21;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(197, 197, 197); 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(141, 141, 141); 
+}

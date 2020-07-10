@@ -1,0 +1,82 @@
+.contato {
+    padding-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;   
+    background-color: #f9f9f9;
+
+    &__message {
+        height: 500px;
+        border-radius: 5px;
+        position: relative;
+        padding-bottom: 80px;
+        background-color: #f9f9f9;
+    }
+
+    &__group {
+        border-right: 1px solid #ddd;
+        overflow-y: auto;
+        height: 500px;
+    }
+
+    &__title {
+        padding-left: 10px;
+        font-size: 1.5rem;
+        margin-top: 15px;
+    }
+
+    &__search {
+        color: #000;
+        margin: 10px 0;
+        padding-left: 10px;
+        display: inline-block;
+        color: #3c69bd;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__link {
+        display: block;
+        padding: 20px 10px;
+        border-top: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        background-color: #fff;
+        color: #000;
+
+        &--active, &:hover {
+            background-color: #f9f9f9;
+        }
+    }
+
+    &__user {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-left: 20px;
+        right: 0;
+        height: 50px;
+        line-height: 50px;
+        font-size: 1.5rem;
+        border-bottom: 1px solid #ddd;
+    }
+
+    &__form {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        
+    }
+
+    &__input {
+        @include centralizaX;
+        width: 90%;
+        height: 50px;
+        border-radius: 25px;
+        padding: 0 10px;
+        border: 1px solid #ddd;
+        font-size: 1.1rem;
+    }
+}

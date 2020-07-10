@@ -1,0 +1,20 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+
+    @media (min-width: 768px) {
+        display: block;
+    }
+
+    &__link {
+        color: #fff;
+        display: inline-block;
+        padding: 0 10px;
+        line-height: 60px;
+        transition: .3s ease-in-out;
+
+        &:hover {
+            background-color: rgba($color: #000, $alpha: .3);
+        }
+    }
+}

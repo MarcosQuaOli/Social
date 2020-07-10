@@ -1,0 +1,33 @@
+.form {
+    display: grid;
+    gap: 15px;
+    justify-content: center;
+    
+    @media (min-width: 768px) {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        justify-items: end;
+    }
+
+    &__input {
+        height: 25px;
+    }
+
+    &__label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    &__btn {
+        background-color: #3c69bd;
+        color: #fff;
+        border: 1px solid #29487d;
+        border-radius: 5px;
+        padding: 5px;
+        transition: .3s ease-in-out;
+
+        &:hover {
+            background-color: #2c549e;
+        }
+    }
+}

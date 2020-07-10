@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto de uma redesocial</title>
+    <meta name="description" content="Um simples website de rede social, com apenas algumas funções.">
+
+    <link rel="stylesheet" href="/src/css/main.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header__container page">
+            <h2><a class="header__logo" href="#">Social Page</a></h2>
+            
+<?php if(!isset($_SESSION['user'])) { ?>
+
+            <nav>
+                <form class="form" action="/user/login" method="POST">
+                    <div>
+                        <label class="form__label" for="email">E-mail</label>
+                        <input class="form__input" type="text" name="email" id="email" required>
+                    </div>
+
+                    <div>
+                        <label class="form__label" for="password">Senha</label>
+                        <input class="form__input" type="password" name="password" id="password" required>
+                        
+                        <button class="form__btn" type="submit">Entrar</button>
+                    </div>
+
+                </form>
+            </nav>
+
+<?php } ?>
+
+<?php if(isset($_SESSION['user']) && !empty($_SESSION['user'])) { ?>
+
+            <nav class="navbar">
+                <a class="navbar__link" href="#">Feed</a>
+                <a class="navbar__link" href="/user/contatos">Contatos</a>
+                <a class="navbar__link" href="/user/profile">Profile</a>
+                <a class="navbar__link" href="/user/logout">Sair</a>
+            </nav>
+
+<?php } ?>
+        </div>
+    </header>
+
+<?php if(isset($_GET['sucesso']) && $_GET['sucesso'] == 1) { ?>
+
+    <div class="cadastro__sucesso">
+        <h2>Conta cadastrada com sucesso!!</h2>
+    </div>
+
+<?php } ?>
+
+    <main>
+        <?=$content?>
+    </main>
+
+    <footer class="footer">Social Midia &copy; 2020</footer>
+</body>
+</html>

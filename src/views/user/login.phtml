@@ -1,0 +1,16 @@
+<section class="cadastro">
+    <h1 class="cadastro__title">Criar uma nova Conta</h1>
+    <p class="cadastro__text">É rapido e fácil</p>
+
+    <form action="/user/store" method="POST">
+        <input class="cadastro__input" type="text" name="nome" id="nome" required minlength="3" placeholder="Nome" aria-labelledby="nome">
+        <input class="cadastro__input" type="text" name="sobrenome" id="sobrenome" required minlength="3" placeholder="Sobrenome" aria-labelledby="sobrenome">
+        <input class="cadastro__input" type="email" name="email" id="email-re" required placeholder="E-mail" aria-labelledby="email-re">
+        <input class="cadastro__input" type="password" name="password" id="password-re" required placeholder="Nova Senha" aria-labelledby="password-re">
+
+        <label for="birthday">Data de Nascimento</label>
+        <input class="cadastro__input cadastro__input--date" type="date" name="birthday" id="birthday" required>
+
+        <button class="cadastro__btn" type="submit">Cadastre-se</button>
+    </form>
+</section>

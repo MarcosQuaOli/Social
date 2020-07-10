@@ -1,0 +1,16 @@
+.page {
+    max-width: 300px;
+    margin: 0 auto;
+
+    @media (min-width: 576px) {
+        max-width: 500px;
+    }
+
+    @media (min-width: 768px) {
+        max-width: 650px;
+    }
+
+    @media (min-width: 992px) {
+        max-width: 960px;
+    }
+}

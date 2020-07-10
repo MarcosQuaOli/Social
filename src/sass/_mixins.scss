@@ -1,0 +1,11 @@
+@mixin centralizaY {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@mixin centralizaX {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
