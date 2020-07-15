@@ -14,12 +14,48 @@
         </div>
     </div>
 
-    <div class="contato__message">
-        <div class="contato__user">Usuario</div>
+    <div class="contato__box">
+        <div id="<?= $_SESSION['user']['iduser'] ?>" class="contato__user">Usuario</div>
+
+        <div class="contato__talk">
+            <div id="chat">                
+            </div>
+        </div>
+
         <div class="contato__form">
-            <form action="">
-                <input class="contato__input" type="text" placeholder="Digite uma mensagem">
-            </form>
+            <input id="input" class="contato__input" type="text" placeholder="Digite uma mensagem">
         </div>
     </div>
 </section>
+
+<script>
+    let chat = document.getElementById('chat');
+    let input = document.getElementById('input');
+    const socket = new WebSocket('ws://localhost:8080');
+
+   // Ao receber mensagens do servidor
+    socket.addEventListener('message', function (event) {        
+
+        let json = JSON.parse(event.data);
+        console.log(event);
+        
+        chat.insertAdjacentHTML('beforeend', json.msg);
+        
+    });
+
+    // Ao enviar uma mensagem
+    input.addEventListener('keyup', function (event) {
+        if (event.keyCode === 13) {
+            let msg = this.value;
+
+            // Serializamos o objeto para json
+            socket.send(
+                JSON.stringify({
+                    'chat_msg':msg
+                })
+            );
+
+            this.value = '';
+        }
+    });
+</script>

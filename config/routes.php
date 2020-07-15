@@ -13,6 +13,14 @@ return function (App $app, $settings) {
     
     $app->get('/', [UserController::class, 'index']);
 
+    $app->get('/feed', function(Request $request, Response $response) {
+            
+        $renderer = render();
+        
+        return $renderer->render($response, "/posts/feed.phtml");
+        
+    });
+
     $app->group('/user', function (RouteCollectorProxy $group) {
 
         $group->get('/contatos', [UserController::class, 'contato']);

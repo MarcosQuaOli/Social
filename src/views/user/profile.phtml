@@ -1,3 +1,22 @@
+<?php 
+    $mes = date('M');
+
+    $mes_extenso = array(
+        'Jan' => 'Janeiro',
+        'Feb' => 'Fevereiro',
+        'Mar' => 'Março',
+        'Apr' => 'Abril',
+        'May' => 'Maio',
+        'Jun' => 'Junho',
+        'Jul' => 'Julho',
+        'Aug' => 'Agosto',
+        'Nov' => 'Novembro',
+        'Sep' => 'Setembro',
+        'Oct' => 'Outubro',
+        'Dec' => 'Dezembro'
+    );
+?>
+
 <section class="profile">
     <div class="page">
         <h2 class="profile__title"><?= $_SESSION['user']['nome'] ?></h2>
@@ -7,7 +26,11 @@
                 <h3>Sobre</h3>
 
                 <p>Email: <?= $_SESSION['user']['email'] ?></p>
-                <p>Aniversario: <?= $_SESSION['user']['birthday'] ?></p>
+                <p>Aniversario: <?=
+                    date('d' ,strtotime($_SESSION['user']['birthday'])) . " de " . $mes_extenso[date('M' ,strtotime($_SESSION['user']['birthday']))];
+                ?></p>
+
+                <p>Idade: <?= date('Y') - date('Y', strtotime($_SESSION['user']['birthday'])) ?> anos</p>
             </div>
 
             <div class="profile__box">

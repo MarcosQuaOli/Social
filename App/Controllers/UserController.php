@@ -148,7 +148,7 @@ class UserController
                 'birthday' => $user->getBirthday()
             );
 
-			return $response->withRedirect('/');
+			return $response->withRedirect('/feed');
 
 		} else {
 

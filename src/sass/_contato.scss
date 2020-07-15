@@ -1,21 +1,20 @@
 .contato {
-    padding-bottom: 20px;
     display: grid;
     grid-template-columns: 1fr 2fr;   
     background-color: #f9f9f9;
+    height: calc(100vh - 60px);
 
-    &__message {
-        height: 500px;
+    &__box {
+        //height: 500px;
         border-radius: 5px;
         position: relative;
-        padding-bottom: 80px;
-        background-color: #f9f9f9;
+        background-color: #eee6df;
     }
 
     &__group {
         border-right: 1px solid #ddd;
         overflow-y: auto;
-        height: 500px;
+        //height: 500px;
     }
 
     &__title {
@@ -50,7 +49,7 @@
     }
 
     &__user {
-        position: absolute;
+        position: relative;
         top: 0;
         left: 0;
         margin-left: 20px;
@@ -62,7 +61,7 @@
     }
 
     &__form {
-        position: absolute;
+        position: relative;
         bottom: 0;
         left: 0;
         right: 0;
@@ -78,5 +77,48 @@
         padding: 0 10px;
         border: 1px solid #ddd;
         font-size: 1.1rem;
+    }
+
+    &__talk {
+        margin: 0 20px;
+        overflow: auto;
+        height: calc((100vh - 110px) - 60px);
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    &__person {
+       margin-bottom: 10px; 
+       
+        &--left {
+            margin-right: 50px;
+        }
+        
+        &--right {
+            margin-left: 50px;
+            margin-right: 10px;
+        }
+    }
+
+    &__msg {        
+        padding: 10px 15px;
+        width: auto;
+        display: inline-block;
+        border-radius: 5px;
+        z-index: 2;
+               
+        &--left {
+            background-color: #fff;
+            float: left;
+        }
+        
+        &--right {
+            background-color: #DCF8C6;
+            float: right;
+        }
+    }
+
+    &__clear {
+        clear: both;
     }
 }
