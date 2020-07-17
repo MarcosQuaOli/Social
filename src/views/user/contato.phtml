@@ -8,38 +8,78 @@
 
 <?php foreach($friends as $friend) { ?>
 
-            <a class="contato__link" href=""><?= $friend->nome ?></a>
+            <a class="contato__link" href="/user/contatos/<?= $friend->iduser ?>"><?= $friend->nome ?></a>
 
 <?php } ?>
         </div>
     </div>
 
-    <div class="contato__box">
-        <div id="<?= $_SESSION['user']['iduser'] ?>" class="contato__user">Usuario</div>
+<?php if(isset($user)) { foreach($friends as $friend) { if($friend->iduser == $user) { ?>
 
+    
+    <div class="contato__box">
+        <div id="user_to" class="contato__user"><?= $friend->nome ?></div>
+    
         <div class="contato__talk">
-            <div id="chat">                
+            <div id="chat"> 
+                
+<?php if(isset($mensagens) && count($mensagens) > 0) { foreach($mensagens as $msg) { ?>  
+    
+                <?php if($msg->iduser_from == $_SESSION['user']['iduser']) { ?>
+                    
+                    <div class="contato__person contato__person--right">
+                        <p class="contato__msg contato__msg--right"><?= $msg->mensagem ?></p>
+                        <div class='contato__clear'></div>
+                    </div>
+                
+                <?php } ?>
+
+                <?php if($msg->iduser_from == $user) { ?>
+
+                    <div class="contato__person contato__person--left">
+                        <p class="contato__msg contato__msg--left"><?= $msg->mensagem ?></p>
+                        <div class='contato__clear'></div>
+                    </div>
+
+                <?php } ?>
+    
+<?php }} ?>
+    
             </div>
         </div>
-
+    
         <div class="contato__form">
-            <input id="input" class="contato__input" type="text" placeholder="Digite uma mensagem">
+            <form action="" method="" id="formulario">
+                <input type="hidden" name="iduser_to" value="<?= $user ?>">
+                <input type="hidden" name="iduser_from" value="<?= $_SESSION['user']['iduser'] ?>">
+                <input id="input" name="mensagem" class="contato__input" type="text" minlength="1" placeholder="Digite uma mensagem">
+            </form>
         </div>
     </div>
+
+<?php }}} ?>
+
+
 </section>
 
 <script>
     let chat = document.getElementById('chat');
     let input = document.getElementById('input');
-    const socket = new WebSocket('ws://localhost:8080');
+    let user_to = <?= $user ?>;
+    let user_from = <?= $_SESSION['user']['iduser'] ?>;
+    const socket = new WebSocket('ws://projeto-midia.epizy.com/user/contatos/' + user_to + ':8085');
+    //const socket = new WebSocket('ws://localhost:8085');
 
-   // Ao receber mensagens do servidor
-    socket.addEventListener('message', function (event) {        
-
-        let json = JSON.parse(event.data);
-        console.log(event);
+    // Ao receber mensagens do servidor
+    socket.addEventListener('message', function (event) {    
         
-        chat.insertAdjacentHTML('beforeend', json.msg);
+        let json = JSON.parse(event.data);       
+
+        if (user_from == json.user_to && json.user_from == user_to || user_from == json.user_from) {
+
+            chat.insertAdjacentHTML('beforeend', json.msg);
+
+        }
         
     });
 
@@ -48,14 +88,28 @@
         if (event.keyCode === 13) {
             let msg = this.value;
 
-            // Serializamos o objeto para json
-            socket.send(
-                JSON.stringify({
-                    'chat_msg':msg
-                })
-            );
-
+            if(msg.length > 0) {
+                // Serializamos o objeto para json
+                socket.send(
+                    JSON.stringify({
+                        'chat_msg':msg,
+                        'user_to':user_to,
+                        'user_from':user_from
+                    })
+                );       
+            }
+        
             this.value = '';
         }
     });
+
+    $("#formulario").submit(function() {
+        var dados = $(this).serialize();
+
+        if (input.value.length > 0) {
+            $.post('/message', dados);
+        }
+
+        return false;
+    })
 </script>

@@ -7,6 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Models\User;
 use App\Models\Follow;
+use App\Models\Chat;
 
 class UserController 
 {
@@ -37,15 +38,31 @@ class UserController
 
     }
     
-    public function contato(Request $request, Response $response) 
+    public function contato(Request $request, Response $response, $args) 
     {
-
+        
         $user_follow = new Follow();
 
         $results = $user_follow->getAll();
 
         $renderer = render();
-        
+
+        if(isset($args['id'])) {
+
+            $chat = new Chat();
+
+            $chat->iduser_from = $_SESSION['user']['iduser'];
+            $chat->iduser_to = $args['id'];
+
+            $mensagens = $chat->getAll();
+
+            return $renderer->render($response, "/user/contato.phtml", [
+                "friends" => $results,
+                "user" => $args['id'],
+                "mensagens" => $mensagens
+            ]);
+        }
+
         return $renderer->render($response, "/user/contato.phtml", [
             "friends" => $results
         ]);

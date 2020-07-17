@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 /* Controllers */
 use App\Controllers\UserController;
+use App\Controllers\ChatController;
 
 return function (App $app, $settings) {
     
@@ -20,10 +21,14 @@ return function (App $app, $settings) {
         return $renderer->render($response, "/posts/feed.phtml");
         
     });
+    
+    $app->post('/message', [ChatController::class, 'message']); 
 
     $app->group('/user', function (RouteCollectorProxy $group) {
 
         $group->get('/contatos', [UserController::class, 'contato']);
+
+        $group->get('/contatos/{id}', [UserController::class, 'contato']);               
 
         $group->get('/search', function(Request $request, Response $response) {
             

@@ -1,11 +1,10 @@
 .contato {
     display: grid;
-    grid-template-columns: 1fr 2fr;   
+    grid-template-columns: 250px auto;   
     background-color: #f9f9f9;
     height: calc(100vh - 60px);
 
     &__box {
-        //height: 500px;
         border-radius: 5px;
         position: relative;
         background-color: #eee6df;
@@ -14,7 +13,6 @@
     &__group {
         border-right: 1px solid #ddd;
         overflow-y: auto;
-        //height: 500px;
     }
 
     &__title {
@@ -39,7 +37,6 @@
         display: block;
         padding: 20px 10px;
         border-top: 1px solid #ddd;
-        border-right: 1px solid #ddd;
         background-color: #fff;
         color: #000;
 
@@ -52,12 +49,13 @@
         position: relative;
         top: 0;
         left: 0;
-        margin-left: 20px;
+        padding-left: 20px;
         right: 0;
         height: 50px;
         line-height: 50px;
         font-size: 1.5rem;
         border-bottom: 1px solid #ddd;
+        background-color: #f9f9f9;
     }
 
     &__form {
@@ -65,8 +63,7 @@
         bottom: 0;
         left: 0;
         right: 0;
-        height: 50px;
-        
+        height: 50px;        
     }
 
     &__input {
@@ -85,10 +82,11 @@
         height: calc((100vh - 110px) - 60px);
         display: flex;
         flex-direction: column-reverse;
+        width: calc((100vw - 250px) - 40px);
     }
 
     &__person {
-       margin-bottom: 10px; 
+       margin-bottom: 5px; 
        
         &--left {
             margin-right: 50px;
