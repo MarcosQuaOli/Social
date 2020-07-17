@@ -55,14 +55,8 @@ class User extends Model
     public function searchUser()
     {
 
-        $query = "SELECT u.iduser, u.nome, (
-            select
-                count(*)
-            from
-                users_follows as uf
-            where 
-                uf.iduser = :iduser and uf.iduser_follow = u.iduser
-        ) as seguindo FROM tb_users as u WHERE nome like :nome and iduser != :iduser";
+        //$query = "SELECT * FROM tb_users WHERE nome like :nome and iduser != :iduser";
+        $query = "SELECT u.iduser, u.nome, uf.status FROM tb_users as u LEFT JOIN users_follows as uf on uf.iduser = u.iduser WHERE u.nome like :nome and u.iduser != :iduser";
 
         $sql = new Connection();
 

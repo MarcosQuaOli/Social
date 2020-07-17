@@ -15,6 +15,8 @@ return function (App $app, $settings) {
     $app->get('/', [UserController::class, 'index']);
 
     $app->get('/feed', function(Request $request, Response $response) {
+
+        if(autentica() == false) return $response->withRedirect('/');
             
         $renderer = render();
         
@@ -22,6 +24,8 @@ return function (App $app, $settings) {
         
     });
     
+    $app->get('/message', [ChatController::class, 'show']);
+
     $app->post('/message', [ChatController::class, 'message']); 
 
     $app->group('/user', function (RouteCollectorProxy $group) {
@@ -30,15 +34,11 @@ return function (App $app, $settings) {
 
         $group->get('/contatos/{id}', [UserController::class, 'contato']);               
 
-        $group->get('/search', function(Request $request, Response $response) {
-            
-            $renderer = render();
-            
-            return $renderer->render($response, "/user/search.phtml");
-            
-        });
+        $group->get('/search', [UserController::class, 'pendente']);
 
         $group->post('/search', [UserController::class, 'search']);
+
+        $group->get('/confirm/{id}', [UserController::class, 'confirm']);
 
         $group->get('/follow/{id}', [UserController::class, 'follow']);
 
@@ -53,6 +53,20 @@ return function (App $app, $settings) {
         $group->get('/logout', [UserController::class, 'logout']);
 
     });
+
+    function autentica() {
+        
+        if(isset($_SESSION['user']) && !empty($_SESSION['user'])) {
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
 
     function render() {
         $path = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'views';

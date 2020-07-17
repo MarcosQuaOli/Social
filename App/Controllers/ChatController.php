@@ -19,6 +19,20 @@ class ChatController
         $this->container = $container;
     }
     
+    public function show(Request $request, Response $response) 
+    {
+
+        $chat = new Chat();
+
+        $chat->setAll($_GET);
+
+        $data = $chat->getAll();
+
+        $response->getBody()->write(json_encode($data));
+        return $response->withStatus(200);
+
+    }
+    
     public function message(Request $request, Response $response) 
     {
 
@@ -27,6 +41,8 @@ class ChatController
         $chat->setAll($_POST);
 
         $chat->insert();
+        
+        return $response->withStatus(200);
 
     }
 }

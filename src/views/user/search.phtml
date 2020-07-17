@@ -7,27 +7,29 @@
         </form>
     </div>
 
-<?php if(isset($results)) { foreach($results as $user) { ?>
+<?php if (isset($pendentes)) { foreach($pendentes as $pendente) { ?>
+
+    <div class="search__item">
+        <p><?= $pendente->nome ?></p>
+
+        <div>
+            <a class="search__link search__link--follow" href="/user/confirm/<?= $pendente->iduser ?>">Confirmar</a>
+        </div>
+    </div>
+<?php }} ?>
+    
+<?php if (isset($results)) { foreach($results as $user) { if ($user->status != 'amigos') { ?>
 
     <div class="search__item">
         <p><?= $user->nome ?></p>
 
         <div>
+            <a class="search__link search__link--follow" href="/user/follow/<?= $user->iduser ?>">Adicionar</a>
 
-<?php if($user->seguindo == 0) { ?>
-
-            <a class="search__link search__link--follow" href="/user/follow/<?= $user->iduser ?>">Seguir</a>
-
-<?php } ?>  
-<?php if($user->seguindo == 1) { ?>
-
-            <a class="search__link search__link--unfollow" href="/user/unfollow/<?= $user->iduser ?>">Deixar de seguir</a>
-        
-
-<?php } ?>  
+            <!-- <a class="search__link search__link--unfollow" href="/user/unfollow/<?= $user->iduser ?>">Deixar de seguir</a> -->
         </div>
     </div>
 
-<?php }} ?>
+<?php }}} ?>
 
 </section>

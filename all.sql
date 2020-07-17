@@ -166,3 +166,8 @@ ALTER TABLE `tb_users`
 ALTER TABLE `users_follows`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
+
+
+
+
+ALTER TABLE `users_follows` ADD `status` VARCHAR(100) NOT NULL DEFAULT 'desconhecido' AFTER `iduser_follow`;

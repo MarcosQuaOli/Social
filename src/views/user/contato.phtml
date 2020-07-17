@@ -1,9 +1,6 @@
 <section class="contato">
-    <div class="contato__group">
+    <div class="contato__group <?php if(isset($user)) print "contato__group-desk"; ?>">
         <h3 class="contato__title">Amigos</h3>
-    
-        <a class="contato__search" href="/user/search">Adicionar pessoas conhecidas</a>
-
         <div>
 
 <?php foreach($friends as $friend) { ?>
@@ -18,7 +15,7 @@
 
     
     <div class="contato__box">
-        <div id="user_to" class="contato__user"><?= $friend->nome ?></div>
+        <div id="user_to" class="contato__user"><a href="/user/contatos"><img src="/src/img/arrow-left.svg" alt="arrow icon"></a><?= $friend->nome ?></div>
     
         <div class="contato__talk">
             <div id="chat"> 
@@ -52,7 +49,7 @@
             <form action="" method="" id="formulario">
                 <input type="hidden" name="iduser_to" value="<?= $user ?>">
                 <input type="hidden" name="iduser_from" value="<?= $_SESSION['user']['iduser'] ?>">
-                <input id="input" name="mensagem" class="contato__input" type="text" minlength="1" placeholder="Digite uma mensagem">
+                <input id="input" name="mensagem" class="contato__input" type="text" minlength="1" autocomplete="off" placeholder="Digite uma mensagem">
             </form>
         </div>
     </div>
@@ -65,51 +62,84 @@
 <script>
     let chat = document.getElementById('chat');
     let input = document.getElementById('input');
-    let user_to = <?= $user ?>;
-    let user_from = <?= $_SESSION['user']['iduser'] ?>;
-    const socket = new WebSocket('ws://projeto-midia.epizy.com/user/contatos/' + user_to + ':8085');
-    //const socket = new WebSocket('ws://localhost:8085');
+    let user_from = <?= $_SESSION['user']['iduser']; ?>;
 
-    // Ao receber mensagens do servidor
-    socket.addEventListener('message', function (event) {    
+    <?php if(isset($user)) { ?>
         
-        let json = JSON.parse(event.data);       
+        let user_to = <?= $user; ?>;
 
-        if (user_from == json.user_to && json.user_from == user_to || user_from == json.user_from) {
+        setInterval(function(){
+            update_last_activity();
+        }, 3000);    
 
-            chat.insertAdjacentHTML('beforeend', json.msg);
+    <?php } ?>
 
-        }
-        
-    });
-
-    // Ao enviar uma mensagem
-    input.addEventListener('keyup', function (event) {
-        if (event.keyCode === 13) {
-            let msg = this.value;
-
-            if(msg.length > 0) {
-                // Serializamos o objeto para json
-                socket.send(
-                    JSON.stringify({
-                        'chat_msg':msg,
-                        'user_to':user_to,
-                        'user_from':user_from
-                    })
-                );       
-            }
-        
-            this.value = '';
-        }
-    });
 
     $("#formulario").submit(function() {
         var dados = $(this).serialize();
 
         if (input.value.length > 0) {
-            $.post('/message', dados);
+            /* $.post('/message', dados); */
+
+            $.ajax({
+                url:"/message",
+                method:"POST",
+                data: dados,
+                success:function(data){
+                    
+                    let response_from = 
+                        "<div class='contato__person contato__person--right'><p class='contato__msg contato__msg--right'>" +
+                        input.value + 
+                        "</p><div class='contato__clear'></div></div>";
+
+                    chat.insertAdjacentHTML('beforeend', response_from);
+                    
+                    input.value = '';
+
+                }
+            })
+
         }
 
         return false;
     })
+
+
+    function update_last_activity() {
+
+        $.get('/message', {iduser_to: user_to, iduser_from: user_from}, function(data) {
+
+            while (chat.firstChild) {
+                chat.removeChild(chat.firstChild);
+            }
+
+            let json = JSON.parse(data);
+
+            json.forEach(function(element) {
+
+                if (element.iduser_from == user_from) {
+
+                    let response_from = 
+                        "<div class='contato__person contato__person--right'><p class='contato__msg contato__msg--right'>" +
+                        element.mensagem + 
+                        "</p><div class='contato__clear'></div></div>";
+
+
+                    chat.insertAdjacentHTML('beforeend', response_from);
+
+                } else {
+                    
+                    let response_from = 
+                        "<div class='contato__person contato__person--left'><p class='contato__msg contato__msg--left'>" +
+                        element.mensagem + 
+                        "</p><div class='contato__clear'></div></div>";
+
+                    chat.insertAdjacentHTML('beforeend', response_from);
+
+                }
+
+            }) 
+
+        });
+    }
 </script>

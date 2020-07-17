@@ -9,12 +9,15 @@
     &__link {
         color: #fff;
         display: inline-block;
-        padding: 0 10px;
         line-height: 60px;
         transition: .3s ease-in-out;
 
         &:hover {
             background-color: rgba($color: #000, $alpha: .3);
+        }
+  
+        @media (min-width: 768px) {
+            padding: 0 10px;
         }
     }
 }

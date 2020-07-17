@@ -31,6 +31,7 @@ class UserController
     
     public function show(Request $request, Response $response) 
     {
+        if(autentica() == false) return $response->withRedirect('/');
 
         $renderer = render();
         
@@ -40,6 +41,8 @@ class UserController
     
     public function contato(Request $request, Response $response, $args) 
     {
+
+        if(autentica() == false) return $response->withRedirect('/');
         
         $user_follow = new Follow();
 
@@ -66,6 +69,20 @@ class UserController
         return $renderer->render($response, "/user/contato.phtml", [
             "friends" => $results
         ]);
+
+    }
+    
+    public function confirm(Request $request, Response $response, $args) 
+    {
+
+        $user_follow = new Follow();
+
+        $user_follow->iduser_follow = $args['id'];
+        $user_follow->iduser = $_SESSION['user']['iduser'];
+
+        $user_follow->confirm();
+
+        return $response->withRedirect('/user/search');
 
     }
     
@@ -96,11 +113,28 @@ class UserController
         return $response->withRedirect('/user/search');
 
     }
+
+    public function pendente(Request $request, Response $response) 
+    {
+
+        if(autentica() == false) return $response->withRedirect('/');
+
+        $follows = new Follow();
+
+        $pendentes = $follows->getPendente();
+        
+        $renderer = render();
+        
+        return $renderer->render($response, "/user/search.phtml", [
+            "pendentes" => $pendentes
+        ]);
+
+    }
     
     public function search(Request $request, Response $response) 
     {
 
-        $user = new User(); 
+        $user = new User();
 
         $user->nome = $_POST['usuario'];
         
